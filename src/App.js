@@ -9,19 +9,27 @@ function App() {
 
   const getMovie = async (searchTerm) => {
     // make fetch request and store response
-    const response = await fetch(`http://www.omdbapi.com/?apikey=${apiKey}&t=${searchTerm}`);
+    try{
+      const response = await fetch(`http://www.omdbapi.com/?apikey=${apiKey}&t=${searchTerm}`);
 
-    // Returned as XML and we need to turn into JSON
-    // Parse JSON response into a javascript object
-    const data = await response.json();
-    //set the Movie state to the movie
-    setMovie(data);
+      // Returned as XML and we need to turn into JSON
+      // Parse JSON response into a javascript object
+      const data = await response.json();
+      //set the Movie state to the movie
+      setMovie(data);
+    } catch(err) {
+        console.log(err);
+    }
   }
+
+  useEffect(() => {
+    getMovie("The Sandlot")
+  }, [])
 
   return (
     <div className="App">
-      <Form />
-      <MovieDisplay />
+      <Form getMovie={getMovie} />
+      <MovieDisplay movie={movie} />
     </div>
   );
 }

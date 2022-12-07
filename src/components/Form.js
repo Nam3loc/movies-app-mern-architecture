@@ -10,15 +10,24 @@ export default function Form(props) {
         setFormData({...formData, [evt.target.name]: evt.target.value});
     }
 
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+
+        props.getMovie(formData.searchterm);
+    }
+
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <input 
                     type="text"
                     name="searchterm"
                     onChange={handleChange}
                 />
-                <input type="submit" value="submit" />
+                <input 
+                    type="submit" 
+                    value="submit" 
+                />
             </form>
         </div>
     )
